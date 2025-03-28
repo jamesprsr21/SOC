@@ -65,6 +65,9 @@ The linker puts all the object files together into the series of hex digits in t
 This is generally referred to as a toolchain, but may be informally referred to as a compiler.
 
 
+  The linker combines input files into a single output file. The output file and each input file are in a special data format known as an object file format . Each file is called an object file . The output file is often called an executable , but for our purposes we will also call it an object file. 
+An .elf file, short for Executable and Linkable Format, is a standard file format used for executable files, object code, shared libraries, and core dumps on Linux and Unix-like systems
+
 
 
 
