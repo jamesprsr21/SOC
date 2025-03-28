@@ -1,0 +1,55 @@
+A **reset handler** is a critical piece of code executed by a processor immediately after a reset event (e.g., power-on, hardware reset, or watchdog timeout). It initializes the system to a known state and prepares it to run the main application. Here's a detailed breakdown:
+
+---
+
+### **Key Responsibilities of a Reset Handler**
+1. **Hardware Initialization**:
+   - Sets up the **stack pointer** to establish a valid stack for function calls and interrupts.
+   - Configures essential hardware components (e.g., clock sources, memory controllers, or cache/MMU settings).
+
+2. **Memory Initialization**:
+   - **Copies initialized data** from non-volatile memory (e.g., Flash) to RAM (e.g., `.data` section in C programs).
+   - **Zeros uninitialized data** (e.g., `.bss` section) to ensure variables start with default values.
+
+3. **Processor State Setup**:
+   - Disables interrupts globally during initialization.
+   - Configures default interrupt/exception handling (e.g., setting up the **interrupt vector table**).
+
+4. **Handling Reset Causes** (optional):
+   - Checks the reset source (e.g., power-on, watchdog, or software reset) to perform specific recovery actions.
+
+5. **Transfer to Main Code**:
+   - Jumps to the `main()` function or bootloader after initialization is complete.
+
+---
+
+### **How It Works**
+- **Reset Vector**: The processor fetches the address of the reset handler from a fixed memory location (the **reset vector**), typically at the start of the memory map.
+- **Low-Level Code**: Often written in assembly or low-level C, the reset handler is part of the firmware's startup code (e.g., `startup.s` in ARM projects).
+- **Architecture-Specific**: Implementation details vary by processor (e.g., ARM Cortex-M, AVR, x86), but the core purpose remains the same.
+
+---
+
+### **Example Flow (ARM Cortex-M)**
+1. Processor resets and fetches the initial stack pointer value from address `0x00000000`.
+2. Fetches the reset handler address from `0x00000004`.
+3. The reset handler:
+   - Initializes memory (`.data`, `.bss`).
+   - Configures system clocks.
+   - Sets up peripherals.
+   - Calls `main()`.
+
+---
+
+### **Why It Matters**
+Without a reset handler, the processor would start executing code in an unpredictable state, leading to crashes or undefined behavior. It ensures the system boots reliably and consistently.
+
+---
+
+### **Reset Handler vs. Bootloader**
+- **Reset Handler**: Focuses on minimal initialization to prepare for code execution.
+- **Bootloader**: A larger program (optional) that may run after the reset handler to update firmware or load an OS.
+
+---
+
+In summary, the reset handler is the processor's "first responder," ensuring the system is stable and ready to run your code after a reset.
