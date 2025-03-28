@@ -53,6 +53,17 @@ o reset handler: A reset handler, also known as startup code, is the first softw
 
 
 
+    Toolchain: You need a compiler (and an assembler and a linker), also known as a toolchain.
+
+The compiler converts your C program source code into executable object code for your target machine. This object code can be represented as a series of hex digits in a .hex file.
+ toolchain. There are a number of steps which have to happen between the C code you have and loading data onto the device:
+
+The preprocessor converts #include and #define macros, and also processes any conditional compilation (#if) symbols.
+The compiler converts each .c file into assembly code.
+The assembler converts those into object files. These files use relative addressing.
+The linker puts all the object files together into the series of hex digits in the .hex file, and gives them the addresses required by the device. It also brings in any external object files for which you don't have the source code (or have already compiled it in a previous iteration).
+This is generally referred to as a toolchain, but may be informally referred to as a compiler.
+
 
 
 
